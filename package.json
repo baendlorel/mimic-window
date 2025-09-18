@@ -6,8 +6,8 @@
 		"email": "futami16237@gmail.com"
 	},
 	"purpose": "app",
-	"description": "mimic-window",
-	"description_zh": "mimic-window",
+	"description": "A terminal file explorer that mimics the shape of a normal gui explorer.",
+	"description_zh": "一个终端文件管理器，用ascii字符模拟图形界面文件管理器的外观。",
 	"type": "module",
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
