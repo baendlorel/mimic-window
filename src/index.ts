@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 
-import { FileManager } from './core/FileManager.js';
+import { FileManager } from './core/file-manager.js';
 
 async function main() {
   try {
     console.log('🚀 Starting Mimic Window File Manager...');
-    
+
     const fileManager = new FileManager();
     await fileManager.start();
-    
   } catch (error) {
     console.error('❌ Failed to start file manager:', error);
     process.exit(1);

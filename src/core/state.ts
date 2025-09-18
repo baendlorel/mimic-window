@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { FileItem } from './FileSystem.js';
+import { FileItem } from './file-system.js';
 
 // Application state interface
 export interface AppState {
@@ -57,8 +57,8 @@ export class StateManager extends EventEmitter {
         visible: false,
         x: 0,
         y: 0,
-        items: ['Open', 'Copy', 'Paste', 'Delete', 'Rename', 'Properties']
-      }
+        items: ['Open', 'Copy', 'Paste', 'Delete', 'Rename', 'Properties'],
+      },
     };
   }
 
@@ -76,45 +76,45 @@ export class StateManager extends EventEmitter {
 
   // Specific state update helpers
   setCurrentPath(path: string): void {
-    this.updateState(state => ({
+    this.updateState((state) => ({
       ...state,
       currentPath: path,
       selectedIndex: 0,
-      error: null
+      error: null,
     }));
     this.emit('state:path:changed', path);
   }
 
   setFiles(files: FileItem[]): void {
-    this.updateState(state => ({
+    this.updateState((state) => ({
       ...state,
       files,
       isLoading: false,
-      error: null
+      error: null,
     }));
     this.emit('state:files:changed', files);
   }
 
   setSelectedIndex(index: number): void {
-    this.updateState(state => ({
+    this.updateState((state) => ({
       ...state,
-      selectedIndex: index
+      selectedIndex: index,
     }));
     this.emit('state:selection:changed', index);
   }
 
   setLoading(isLoading: boolean): void {
-    this.updateState(state => ({
+    this.updateState((state) => ({
       ...state,
-      isLoading
+      isLoading,
     }));
   }
 
   setError(error: string | null): void {
-    this.updateState(state => ({
+    this.updateState((state) => ({
       ...state,
       error,
-      isLoading: false
+      isLoading: false,
     }));
     if (error) {
       this.emit('state:error:occurred', error);
@@ -122,9 +122,9 @@ export class StateManager extends EventEmitter {
   }
 
   setMessage(message: string | null): void {
-    this.updateState(state => ({
+    this.updateState((state) => ({
       ...state,
-      message
+      message,
     }));
     if (message) {
       this.emit('state:message:shown', message);
@@ -132,76 +132,74 @@ export class StateManager extends EventEmitter {
   }
 
   showContextMenu(x: number, y: number): void {
-    this.updateState(state => ({
+    this.updateState((state) => ({
       ...state,
       contextMenu: {
         ...state.contextMenu,
         visible: true,
         x,
-        y
-      }
+        y,
+      },
     }));
     this.emit('state:contextmenu:shown', x, y);
   }
 
   hideContextMenu(): void {
-    this.updateState(state => ({
+    this.updateState((state) => ({
       ...state,
       contextMenu: {
         ...state.contextMenu,
-        visible: false
-      }
+        visible: false,
+      },
     }));
     this.emit('state:contextmenu:hidden');
   }
 
   toggleViewMode(): void {
-    this.updateState(state => ({
+    this.updateState((state) => ({
       ...state,
-      viewMode: state.viewMode === 'list' ? 'grid' : 'list'
+      viewMode: state.viewMode === 'list' ? 'grid' : 'list',
     }));
   }
 
   toggleSortOrder(): void {
-    this.updateState(state => ({
+    this.updateState((state) => ({
       ...state,
-      sortOrder: state.sortOrder === 'asc' ? 'desc' : 'asc'
+      sortOrder: state.sortOrder === 'asc' ? 'desc' : 'asc',
     }));
   }
 
   setSortBy(sortBy: 'name' | 'size' | 'date'): void {
-    this.updateState(state => ({
+    this.updateState((state) => ({
       ...state,
-      sortBy
+      sortBy,
     }));
   }
 
   toggleHiddenFiles(): void {
-    this.updateState(state => ({
+    this.updateState((state) => ({
       ...state,
-      showHidden: !state.showHidden
+      showHidden: !state.showHidden,
     }));
   }
 
   // Selector functions (derive data from state)
   getSelectedFile(): FileItem | null {
     const { files, selectedIndex } = this.state;
-    return files.length > 0 && selectedIndex < files.length 
-      ? files[selectedIndex] 
-      : null;
+    return files.length > 0 && selectedIndex < files.length ? files[selectedIndex] : null;
   }
 
   getSortedFiles(): FileItem[] {
     const { files, sortBy, sortOrder, showHidden } = this.state;
-    
+
     let filteredFiles = files;
     if (!showHidden) {
-      filteredFiles = files.filter(file => !file.name.startsWith('.'));
+      filteredFiles = files.filter((file) => !file.name.startsWith('.'));
     }
 
     return filteredFiles.sort((a, b) => {
       let comparison = 0;
-      
+
       switch (sortBy) {
         case 'name':
           comparison = a.name.localeCompare(b.name);
@@ -213,7 +211,7 @@ export class StateManager extends EventEmitter {
           comparison = a.modified.getTime() - b.modified.getTime();
           break;
       }
-      
+
       return sortOrder === 'asc' ? comparison : -comparison;
     });
   }
@@ -221,12 +219,12 @@ export class StateManager extends EventEmitter {
   // State validation
   validateState(): boolean {
     const { files, selectedIndex } = this.state;
-    
+
     if (selectedIndex < 0 || selectedIndex >= files.length) {
       this.setSelectedIndex(0);
       return false;
     }
-    
+
     return true;
   }
 

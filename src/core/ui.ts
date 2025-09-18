@@ -1,6 +1,6 @@
-import * as blessed from 'blessed';
-import * as path from 'path';
-import { FileItem } from './FileSystem.js';
+import blessed from 'blessed';
+import path from 'path';
+import { FileItem } from './file-system.js';
 
 export class UI {
   private screen!: blessed.Widgets.Screen;
@@ -27,12 +27,12 @@ export class UI {
       style: {
         fg: 'white',
         bg: 'blue',
-        bold: true
+        bold: true,
       },
       border: {
-        type: 'line'
+        type: 'line',
       },
-      tags: true
+      tags: true,
     });
 
     this.screen.append(this.pathBox);
@@ -51,16 +51,16 @@ export class UI {
       style: {
         selected: {
           fg: 'black',
-          bg: 'white'
+          bg: 'white',
         },
         item: {
           fg: 'white',
-          bg: 'black'
-        }
+          bg: 'black',
+        },
       },
       border: {
-        type: 'line'
-      }
+        type: 'line',
+      },
     });
 
     this.screen.append(this.fileList);
@@ -75,11 +75,11 @@ export class UI {
       content: ' Use arrow keys to navigate, Enter to open, Esc to go back ',
       style: {
         fg: 'black',
-        bg: 'gray'
+        bg: 'gray',
       },
       border: {
-        type: 'line'
-      }
+        type: 'line',
+      },
     });
 
     this.screen.append(this.messageBox);
@@ -88,17 +88,17 @@ export class UI {
   updateDirectoryView(currentPath: string, items: FileItem[]): void {
     this.currentItems = items;
     this.selectedIndex = 0;
-    
+
     // Update path display
     this.pathBox.setContent(` Path: ${currentPath} `);
-    
+
     // Update file list with ASCII icons
     const displayItems = items.map((item, index) => {
       const icon = this.getIconForItem(item);
       const name = item.name.length > 20 ? item.name.substring(0, 17) + '...' : item.name;
       return `${icon} ${name}`;
     });
-    
+
     this.fileList.setItems(displayItems);
     this.fileList.select(0);
   }
@@ -110,7 +110,7 @@ export class UI {
     } else {
       // File icon based on extension
       const ext = path.extname(item.name).toLowerCase();
-      
+
       switch (ext) {
         case '.txt':
         case '.md':
@@ -196,7 +196,7 @@ export class UI {
   showMessage(message: string): void {
     this.messageBox.setContent(` ${message} `);
     this.screen.render();
-    
+
     // Clear message after 2 seconds
     setTimeout(() => {
       this.messageBox.setContent(' Use arrow keys to navigate, Enter to open, Esc to go back ');
@@ -207,7 +207,7 @@ export class UI {
   showError(error: string): void {
     this.messageBox.setContent(` {red-fg}Error: ${error}{/red-fg} `);
     this.screen.render();
-    
+
     // Clear error after 3 seconds
     setTimeout(() => {
       this.messageBox.setContent(' Use arrow keys to navigate, Enter to open, Esc to go back ');

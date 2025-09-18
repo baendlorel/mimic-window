@@ -1,10 +1,8 @@
-import * as blessed from 'blessed';
-import * as fs from 'fs/promises';
-import * as path from 'path';
-import { EventEmitter } from 'events';
-import { FileSystem } from './FileSystem.js';
-import { UI } from './UI.js';
-import { EventHandler } from './EventHandler.js';
+import blessed from 'blessed';
+import path from 'path';
+import { FileSystem } from './file-system.js';
+import { UI } from './ui.js';
+import { EventHandler } from './event-handler.js';
 
 export class FileManager {
   private screen!: blessed.Widgets.Screen;
@@ -24,9 +22,9 @@ export class FileManager {
     this.initializeScreen();
     this.setupEventHandlers();
     await this.refreshView();
-    
+
     this.screen.render();
-    
+
     // Start the main loop
     this.screen.key(['escape', 'q', 'C-c'], () => {
       process.exit(0);
@@ -40,8 +38,8 @@ export class FileManager {
       cursor: {
         artificial: true,
         shape: 'block',
-        blink: true
-      }
+        blink: true,
+      },
     });
 
     this.ui.initialize(this.screen, this.currentPath);
@@ -57,7 +55,7 @@ export class FileManager {
       },
       onEscape: () => {
         this.handleEscape();
-      }
+      },
     });
 
     // Mouse events will be handled by UI component

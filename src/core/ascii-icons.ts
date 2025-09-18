@@ -1,20 +1,20 @@
-import * as path from 'path';
+import path from 'path';
 
 export class AsciiIcons {
   static getFolderIcon(): string {
     // Folder icon (6x4 characters)
     return [
-      ' 📁 ',  // 使用 Unicode 字符作为图标
+      ' 📁 ', // 使用 Unicode 字符作为图标
       '────',
       '    ',
-      '    '
+      '    ',
     ].join('\n');
   }
 
   static getFileIcon(filename: string): string {
     const ext = path.extname(filename).toLowerCase();
-    
-  // Return different ASCII/unicode icons based on file type
+
+    // Return different ASCII/unicode icons based on file type
     switch (ext) {
       case '.txt':
       case '.md':
@@ -82,119 +82,109 @@ export class AsciiIcons {
 
   private static createTextIcon(label: string): string {
     return [
-      ' 📄 ',  // Unicode text file icon
+      ' 📄 ', // Unicode text file icon
       '────',
       ` ${label.padEnd(3)}`,
-      '    '
+      '    ',
     ].join('\n');
   }
 
   private static createCodeIcon(label: string): string {
     return [
-      ' 💻 ',  // Unicode code file icon
+      ' 💻 ', // Unicode code file icon
       '────',
       ` ${label.padEnd(3)}`,
-      '    '
+      '    ',
     ].join('\n');
   }
 
   private static createDataIcon(label: string): string {
     return [
-      ' 📊 ',  // Unicode data file icon
+      ' 📊 ', // Unicode data file icon
       '────',
       ` ${label.padEnd(3)}`,
-      '    '
+      '    ',
     ].join('\n');
   }
 
   private static createExecutableIcon(label: string): string {
     return [
-      ' ⚡ ',  // Unicode executable file icon
+      ' ⚡ ', // Unicode executable file icon
       '────',
       ` ${label.padEnd(3)}`,
-      '    '
+      '    ',
     ].join('\n');
   }
 
   private static createArchiveIcon(label: string): string {
     return [
-      ' 📦 ',  // Unicode archive file icon
+      ' 📦 ', // Unicode archive file icon
       '────',
       ` ${label.padEnd(3)}`,
-      '    '
+      '    ',
     ].join('\n');
   }
 
   private static createImageIcon(label: string): string {
     return [
-      ' 🖼️ ',  // Unicode image file icon
+      ' 🖼️ ', // Unicode image file icon
       '────',
       ` ${label.padEnd(3)}`,
-      '    '
+      '    ',
     ].join('\n');
   }
 
   private static createAudioIcon(label: string): string {
     return [
-      ' 🎵 ',  // Unicode audio file icon
+      ' 🎵 ', // Unicode audio file icon
       '────',
       ` ${label.padEnd(3)}`,
-      '    '
+      '    ',
     ].join('\n');
   }
 
   private static createVideoIcon(label: string): string {
     return [
-      ' 🎬 ',  // Unicode video file icon
+      ' 🎬 ', // Unicode video file icon
       '────',
       ` ${label.padEnd(3)}`,
-      '    '
+      '    ',
     ].join('\n');
   }
 
   private static createDocumentIcon(label: string): string {
     return [
-      ' 📝 ',  // Unicode document file icon
+      ' 📝 ', // Unicode document file icon
       '────',
       ` ${label.padEnd(3)}`,
-      '    '
+      '    ',
     ].join('\n');
   }
 
   private static createGenericFileIcon(label: string): string {
     return [
-      ' 📄 ',  // Unicode generic file icon
+      ' 📄 ', // Unicode generic file icon
       '────',
       ` ${label.padEnd(3)}`,
-      '    '
+      '    ',
     ].join('\n');
   }
 
   // ASCII-only version (used if Unicode is not supported)
   static getFolderIconAscii(): string {
-    return [
-      '+---+',
-      '|   |',
-      '+---+',
-      ' DIR'
-    ].join('\n');
+    return ['+---+', '|   |', '+---+', ' DIR'].join('\n');
   }
 
   static getFileIconAscii(filename: string): string {
     const ext = path.extname(filename).toLowerCase();
     const label = ext.substring(1).toUpperCase().padEnd(3);
-    
-    return [
-      '+---+',
-      '|   |',
-      '+---+',
-      ` ${label}`
-    ].join('\n');
+
+    return ['+---+', '|   |', '+---+', ` ${label}`].join('\n');
   }
 
   // Check whether the terminal supports Unicode
   static supportsUnicode(): boolean {
-    return process.platform !== 'win32' || process.env.WT_SESSION;
+    return process.platform !== 'win32' || Boolean(process.env.WT_SESSION);
   }
 
   // Get appropriate icon for an item

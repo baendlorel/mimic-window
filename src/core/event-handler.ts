@@ -1,4 +1,4 @@
-import * as blessed from 'blessed';
+import blessed from 'blessed';
 
 export interface EventCallbacks {
   onNavigate: (direction: 'up' | 'down' | 'left' | 'right') => void;
@@ -57,11 +57,14 @@ export class EventHandler {
     });
   }
 
-  setupMouseEvents(screen: blessed.Widgets.Screen, callbacks: {
-    onClick: (x: number, y: number) => void;
-    onDoubleClick: (x: number, y: number) => void;
-    onRightClick: (x: number, y: number) => void;
-  }): void {
+  setupMouseEvents(
+    screen: blessed.Widgets.Screen,
+    callbacks: {
+      onClick: (x: number, y: number) => void;
+      onDoubleClick: (x: number, y: number) => void;
+      onRightClick: (x: number, y: number) => void;
+    }
+  ): void {
     let clickCount = 0;
     let clickTimer: NodeJS.Timeout;
 
@@ -93,19 +96,25 @@ export class EventHandler {
   }
 
   // Method to handle context menu events
-  setupContextMenuEvents(menu: any, callbacks: {
-    onSelect: (item: string) => void;
-    onCancel: () => void;
-  }): void {
+  setupContextMenuEvents(
+    menu: any,
+    callbacks: {
+      onSelect: (item: string) => void;
+      onCancel: () => void;
+    }
+  ): void {
     // This would be implemented when we create the context menu component
   }
 
   // Method to handle drag and drop (if needed)
-  setupDragAndDrop(screen: blessed.Widgets.Screen, callbacks: {
-    onDragStart: (x: number, y: number) => void;
-    onDrag: (x: number, y: number) => void;
-    onDrop: (x: number, y: number) => void;
-  }): void {
+  setupDragAndDrop(
+    screen: blessed.Widgets.Screen,
+    callbacks: {
+      onDragStart: (x: number, y: number) => void;
+      onDrag: (x: number, y: number) => void;
+      onDrop: (x: number, y: number) => void;
+    }
+  ): void {
     // Drag and drop implementation would go here
     // This is more complex and might not be necessary for basic file operations
   }
@@ -126,7 +135,7 @@ export class EventHandler {
       if (!inThrottle) {
         func.apply(this, args);
         inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
+        setTimeout(() => (inThrottle = false), limit);
       }
     }) as T;
   }
