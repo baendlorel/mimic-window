@@ -23,7 +23,6 @@ import {
   getEmptySpaceContextMenuItems,
 } from '../components/context-menu.js';
 import { colorWindowBorder } from '../components/theme.js';
-import { FileItem, Size, MouseEvent } from './types.js';
 
 export class FileManager {
   private stateManager: StateManager;
@@ -157,15 +156,15 @@ export class FileManager {
     });
 
     // Mouse events
-    this.eventBus.on(Events.MOUSE_CLICK, (event: MouseEvent) => {
+    this.eventBus.on(Events.MOUSE_CLICK, (event: MouseEventObject) => {
       this.handleMouseClick(event);
     });
 
-    this.eventBus.on(Events.MOUSE_DOUBLE_CLICK, (event: MouseEvent) => {
+    this.eventBus.on(Events.MOUSE_DOUBLE_CLICK, (event: MouseEventObject) => {
       this.handleMouseDoubleClick(event);
     });
 
-    this.eventBus.on(Events.MOUSE_RIGHT_CLICK, (event: MouseEvent) => {
+    this.eventBus.on(Events.MOUSE_RIGHT_CLICK, (event: MouseEventObject) => {
       this.handleMouseRightClick(event);
     });
 
@@ -257,7 +256,7 @@ export class FileManager {
   /**
    * Handle mouse click
    */
-  private handleMouseClick(event: MouseEvent): void {
+  private handleMouseClick(event: MouseEventObject): void {
     const state = this.stateManager.getState();
     const layout = LayoutManager.calculateLayout(state.viewport.terminalSize);
 
@@ -285,7 +284,7 @@ export class FileManager {
   /**
    * Handle mouse double click
    */
-  private handleMouseDoubleClick(event: MouseEvent): void {
+  private handleMouseDoubleClick(event: MouseEventObject): void {
     const state = this.stateManager.getState();
     const layout = LayoutManager.calculateLayout(state.viewport.terminalSize);
 
@@ -306,7 +305,7 @@ export class FileManager {
   /**
    * Handle mouse right click
    */
-  private handleMouseRightClick(event: MouseEvent): void {
+  private handleMouseRightClick(event: MouseEventObject): void {
     const state = this.stateManager.getState();
     const layout = LayoutManager.calculateLayout(state.viewport.terminalSize);
 

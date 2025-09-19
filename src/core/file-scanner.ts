@@ -1,6 +1,5 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { FileItem } from './types.js';
 
 export class FileScanner {
   /**

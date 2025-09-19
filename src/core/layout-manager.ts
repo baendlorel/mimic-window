@@ -1,4 +1,3 @@
-import { FileItem, Size } from '../core/types.js';
 import { createFileItem } from '../components/icons.js';
 
 export interface LayoutInfo {

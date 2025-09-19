@@ -1,6 +1,4 @@
 import process from 'process';
-import { EventHandler } from './event-bus.js';
-import { KeyEvent } from '../core/types.js';
 
 export class KeyboardHandler {
   private keyHandlers: Map<string, EventHandler<KeyEvent>[]> = new Map();

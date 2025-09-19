@@ -1,9 +1,7 @@
 import process from 'process';
-import { EventHandler } from './event-bus.js';
-import { MouseEvent } from '../core/types.js';
 
 export class MouseHandler {
-  private mouseHandlers: Map<string, EventHandler<MouseEvent>[]> = new Map();
+  private mouseHandlers: Map<string, EventHandler<MouseEventObject>[]> = new Map();
   private isListening = false;
   private lastClickTime = 0;
   private lastClickX = 0;
@@ -44,7 +42,7 @@ export class MouseHandler {
   /**
    * Register mouse event handler
    */
-  on(event: string, handler: EventHandler<MouseEvent>): () => void {
+  on(event: string, handler: EventHandler<MouseEventObject>): () => void {
     if (!this.mouseHandlers.has(event)) {
       this.mouseHandlers.set(event, []);
     }
@@ -71,16 +69,16 @@ export class MouseHandler {
     // Check for mouse escape sequences
     if (!input.startsWith('\x1b[')) return;
 
-    const mouseEvent = this.parseMouseEvent(input);
-    if (mouseEvent) {
-      this.emitMouseEvent(mouseEvent);
+    const MouseEventObject = this.parseMouseEvent(input);
+    if (MouseEventObject) {
+      this.emitMouseEvent(MouseEventObject);
     }
   }
 
   /**
    * Parse mouse escape sequence
    */
-  private parseMouseEvent(sequence: string): MouseEvent | null {
+  private parseMouseEvent(sequence: string): MouseEventObject | null {
     // SGR mouse format: \x1b[<button;x;y;M or \x1b[<button;x;y;m
     const sgrMatch = sequence.match(/^\x1b\[<(\d+);(\d+);(\d+)([Mm])/);
     if (sgrMatch) {
@@ -139,7 +137,7 @@ export class MouseHandler {
   /**
    * Emit mouse event and handle double-click detection
    */
-  private emitMouseEvent(event: MouseEvent): void {
+  private emitMouseEvent(event: MouseEventObject): void {
     const now = Date.now();
     const isDoubleClick =
       now - this.lastClickTime < this.DOUBLE_CLICK_THRESHOLD &&
@@ -149,7 +147,7 @@ export class MouseHandler {
 
     if (isDoubleClick) {
       // Emit double-click event
-      const doubleClickEvent: MouseEvent = {
+      const doubleClickEvent: MouseEventObject = {
         ...event,
         type: 'double-click',
       };

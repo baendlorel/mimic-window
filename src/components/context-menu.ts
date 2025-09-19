@@ -1,5 +1,4 @@
-import { Position } from '../core/types.js';
-import { createBox, padText } from './icons.js';
+import { padText } from './icons.js';
 import { colorContextMenu } from './theme.js';
 
 export interface ContextMenuItem {

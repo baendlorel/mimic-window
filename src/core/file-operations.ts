@@ -1,7 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { spawn } from 'child_process';
-import { FileItem } from '../core/types.js';
 
 export class FileOperations {
   /**

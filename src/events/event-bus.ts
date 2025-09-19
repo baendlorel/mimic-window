@@ -1,15 +1,3 @@
-import { MouseEvent, KeyEvent } from '../core/types.js';
-
-export interface EventHandler<T = any> {
-  (event: T): void | Promise<void>;
-}
-
-export interface EventBus {
-  on<T>(event: string, handler: EventHandler<T>): () => void;
-  emit<T>(event: string, data: T): void;
-  off(event: string, handler?: EventHandler): void;
-}
-
 /**
  * Simple event bus implementation
  */

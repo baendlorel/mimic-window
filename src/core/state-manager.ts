@@ -1,5 +1,3 @@
-import { AppState, FileItem, Position, Size } from './types.js';
-
 // State management using functional approach with immutable updates
 export class StateManager {
   private state: AppState;
