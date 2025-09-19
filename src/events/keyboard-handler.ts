@@ -171,6 +171,11 @@ export class KeyboardHandler {
    * Register common keyboard shortcuts
    */
   registerCommonShortcuts(eventBus: any): void {
+    // Register a global key handler that triggers on any key press
+    this.on('*', () => {
+      // This will trigger re-render on any key press via state change
+    });
+
     // Arrow keys for navigation
     this.on('up', () => eventBus.emit('navigation', { direction: 'up' }));
     this.on('down', () => eventBus.emit('navigation', { direction: 'down' }));

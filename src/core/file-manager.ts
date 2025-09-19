@@ -30,7 +30,6 @@ export class FileManager {
   private keyboardHandler: KeyboardHandler;
   private mouseHandler: MouseHandler;
   private isRunning = false;
-  private renderTimer?: NodeJS.Timeout;
 
   constructor() {
     const currentDir = process.cwd();
@@ -70,10 +69,17 @@ export class FileManager {
       // Load initial directory
       await this.loadCurrentDirectory();
 
-      // Start render loop
-      this.startRenderLoop();
+      // Initial render
+      this.render();
 
-      // Subscribe to state changes
+      // Subscribe to state changes for event-driven rendering
+      // This eliminates the need for continuous render loops (20 FPS)
+      // Rendering is now triggered only when:
+      // 1. Mouse events occur (click, double-click, right-click)
+      // 2. Keyboard events occur (navigation, shortcuts, etc.)
+      // 3. Terminal size changes
+      // 4. File operations complete (copy, paste, delete, etc.)
+      // 5. Directory changes or refreshes
       this.stateManager.subscribe(() => {
         this.render();
       });
@@ -91,12 +97,6 @@ export class FileManager {
     if (!this.isRunning) return;
 
     this.isRunning = false;
-
-    // Stop render loop
-    if (this.renderTimer) {
-      clearInterval(this.renderTimer);
-      this.renderTimer = undefined;
-    }
 
     // Stop event handlers
     this.keyboardHandler.stop();
@@ -129,6 +129,7 @@ export class FileManager {
         width: termSize.columns || 80,
         height: termSize.rows || 24,
       });
+      // Terminal resize triggers re-render automatically via state change
     });
   }
 
@@ -460,16 +461,6 @@ export class FileManager {
         await this.loadCurrentDirectory();
         break;
     }
-  }
-
-  /**
-   * Start render loop
-   */
-  private startRenderLoop(): void {
-    this.render();
-    this.renderTimer = setInterval(() => {
-      this.render();
-    }, 50); // 20 FPS
   }
 
   /**
