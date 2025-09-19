@@ -30,6 +30,7 @@
 		"javascript"
 	],
 	"scripts": {
+		"dev": "tsx src/index.ts",
 		"test": "clear & vitest",
 		"lint": "oxlint .",
 		"cover": "clear & vitest --coverage",
@@ -57,7 +58,6 @@
 		"vitest": "^3.2.4"
 	},
 	"dependencies": {
-		"blessed": "^0.1.81",
 		"tinyrainbow": "^3.0.3"
 	}
 }

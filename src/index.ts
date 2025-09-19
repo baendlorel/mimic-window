@@ -26,8 +26,6 @@ process.on('SIGTERM', () => {
 });
 
 // Start the application
-if (require.main === module) {
-  main();
-}
+main();
 
 export { FileManager };
