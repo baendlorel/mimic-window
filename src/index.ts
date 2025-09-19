@@ -8,22 +8,21 @@ async function main() {
 
     const fileManager = new FileManager();
     await fileManager.start();
+
+    // Graceful shutdown handler
+    const shutdown = async () => {
+      console.log('\n👋 Shutting down...');
+      await fileManager.stop();
+      process.exit(0);
+    };
+
+    process.on('SIGINT', shutdown);
+    process.on('SIGTERM', shutdown);
   } catch (error) {
     console.error('❌ Failed to start file manager:', error);
     process.exit(1);
   }
 }
-
-// Handle graceful shutdown
-process.on('SIGINT', () => {
-  console.log('\n👋 Goodbye!');
-  process.exit(0);
-});
-
-process.on('SIGTERM', () => {
-  console.log('\n👋 Goodbye!');
-  process.exit(0);
-});
 
 // Start the application
 main();

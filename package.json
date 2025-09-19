@@ -58,6 +58,8 @@
 		"vitest": "^3.2.4"
 	},
 	"dependencies": {
+		"ansi-escapes": "^7.1.0",
+		"terminal-size": "^4.0.0",
 		"tinyrainbow": "^3.0.3"
 	}
 }
